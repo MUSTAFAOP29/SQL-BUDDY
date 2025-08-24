@@ -41,12 +41,99 @@ SQL-BUDDY/
 │   ├── screenshot4.png
 
 ~~~
-### 🔹 Data Base Schema
-![English Commands](assets/screenshot1.png)
+## 🗄️ Database Schema (MNC.db)
 
+```mermaid
+erDiagram
+    MNC {
+        int mnc_id PK
+        string name
+        string headquarters
+        int founded_year
+        string industry
+        float revenue_billion
+    }
 
----
+    Regions {
+        int region_id PK
+        int mnc_id FK
+        string region_name
+        string head_office
+    }
 
+    NorthAmerica_Organizations {
+        int org_id PK
+        int region_id FK
+        string org_name
+        string location
+        int established_year
+        int num_employees
+    }
+
+    Europe_Organizations {
+        int org_id PK
+        int region_id FK
+        string org_name
+        string location
+        int established_year
+        int num_employees
+    }
+
+    AsiaPacific_Organizations {
+        int org_id PK
+        int region_id FK
+        string org_name
+        string location
+        int established_year
+        int num_employees
+    }
+
+    India_Organizations {
+        int org_id PK
+        int region_id FK
+        string org_name
+        string location
+        int established_year
+        int num_employees
+    }
+
+    Employees {
+        int emp_id PK
+        int region_id FK
+        int org_id
+        string org_table
+        string name
+        string gender
+        string designation
+        string department
+        float salary
+        date join_date
+        string hire_type
+        int performance_rating
+        float bonus
+    }
+
+    Sales {
+        int sale_id PK
+        int region_id FK
+        int org_id
+        string org_table
+        int year
+        float revenue_million
+        float profit_million
+        int customer_count
+        float yoy_growth_percent
+    }
+
+    %% Relationships
+    MNC ||--o{ Regions : has
+    Regions ||--o{ NorthAmerica_Organizations : includes
+    Regions ||--o{ Europe_Organizations : includes
+    Regions ||--o{ AsiaPacific_Organizations : includes
+    Regions ||--o{ India_Organizations : includes
+    Regions ||--o{ Employees : employs
+    Regions ||--o{ Sales : generates
+```
 ## 📦 Installation (Run Locally)
 
 1. **Clone the repo**
@@ -76,16 +163,15 @@ streamlit run app.py
 
 ## Screenshots
 ### 🔹 English Commands
-![English Commands](assets/screenshot1.png)
+![English Commands](https://github.com/MUSTAFAOP29/SQL-BUDDY/blob/main/Screenshot%20(2369).png)
 
 ### 🔹 Tamil Commands
-![Tamil Commands](assets/screenshot2.png)
+![Tamil Commands](https://github.com/MUSTAFAOP29/SQL-BUDDY/blob/main/Screenshot%20(2370).png) 
 
 ### 🔹 Urdu Commands
-![Urdu Commands](assets/screenshot1.png)
+![Urdu Commands](https://github.com/MUSTAFAOP29/SQL-BUDDY/blob/main/Screenshot%20(2371).png)
 
-### 🔹 Telugu Commands
-![Telugu Commands](assets/screenshot1.png)
+
 
 
 ## 🚀 Live Demo
