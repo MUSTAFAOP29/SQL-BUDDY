@@ -177,12 +177,13 @@ streamlit run app.py
 ## 🚀 Live Demo
 👉 [Try SQL Buddy here](https://sql-buddy-08.streamlit.app/)
 
+#### Note: This model is specifically designed for the provided MNC database. Please ensure that you query only valid questions based on the schema shared above.
 
 
-📜 License
+## 📜 License
 This project is licensed under the MIT License – free to use and modify with attribution.
 
-👨‍💻 Author
+## 👨‍💻 Author
 Developed with ❤️ by Syed Mustafa
 ## 🔗 Links
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/syedmustafa29)
