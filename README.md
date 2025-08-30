@@ -1,7 +1,7 @@
 # 📊 SQL Buddy
 
-SQL Buddy is a **Streamlit-based interactive tool** designed to simplify SQL practice and learning.  
-With a clean interface and built-in SQL execution environment, it helps learners and professionals practice queries in real-time.
+Developed an AI-powered system that enables users to perform CRUD operations on databases through natural language queries in multiple languages including Tamil, Telugu, Hindi, English, Urdu, and Malayalam. 
+The system leverages NLP to seamlessly translate user inputs into SQL commands, making database interaction more accessible and efficient.
 
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
