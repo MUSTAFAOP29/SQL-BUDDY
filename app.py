@@ -16,10 +16,21 @@ else:
     genai.configure(api_key=api_key)
 
 # function to load gemini
-def load_gemini(question, prompt):
-    model = genai.GenerativeModel("gemini-1.5-flash")
-    response = model.generate_content([prompt[0], question])
-    return response.text.strip()  # ✅ ensure no extra quotes/newlines
+def load_gemini(question, prompt, preferred_model="gemini-2.5-flash"):
+    try:
+        model = genai.GenerativeModel(preferred_model)
+        response = model.generate_content([prompt[0], question])
+        return response.text.strip()
+    except Exception as exc:
+        # If the model isn't available, print helpful info and raise a clearer error
+        # (You can optionally call list_models() here to show available models.)
+        msg = str(exc)
+        # Provide immediate hint for the user
+        raise RuntimeError(
+            f"Model '{preferred_model}' unavailable for this API/version. "
+            "Run a model-list helper to see available models. Original error: "
+            + msg
+        ) from exc
 
 # function to retrieve data from the database
 def read_sql(sql, db):
@@ -95,6 +106,43 @@ if submit:
     else:
         st.subheader("📊 Query Results:")
         if data:
-            st.dataframe(data, use_container_width=True, hide_index=True)
+            # Try to render with Streamlit's dataframe (which requires pandas).
+            # If there's a binary incompatibility (numpy/pandas), catch it and
+            # render a simple Markdown table as a safe fallback.
+            try:
+                st.dataframe(data, use_container_width=True, hide_index=True)
+            except Exception as e:
+                st.warning(
+                    "Couldn't render dataframe using pandas (binary incompatibility). Showing fallback table instead."
+                )
+
+                # Helper: render rows (list of tuples) and column names as a Markdown table
+                def _render_markdown_table(rows, cols):
+                    if cols:
+                        header = "| " + " | ".join(cols) + " |"
+                        sep = "| " + " | ".join(["---"] * len(cols)) + " |"
+                        body_lines = []
+                        for row in rows:
+                            # convert each item to string and escape pipe characters
+                            safe_items = [str(item).replace("|", "\\|") for item in row]
+                            body_lines.append("| " + " | ".join(safe_items) + " |")
+                        md = "\n".join([header, sep] + body_lines)
+                        st.markdown(md)
+                    else:
+                        # No column names available: render rows as a bullet list
+                        for r in rows:
+                            st.write(r)
+
+                _render_markdown_table(data, columns)
         else:
             st.info("No results found for this query.")
+
+# model_list.py
+from google.ai import generativelanguage_v1beta as genai_client
+import os
+
+# make sure GOOGLE_API_KEY is exported in env before running
+client = genai_client.services.generative_service.client.GenerativeServiceClient()
+models = client.list_models()
+for m in models:
+    print(m.name)
