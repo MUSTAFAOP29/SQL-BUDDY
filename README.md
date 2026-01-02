@@ -172,11 +172,6 @@ streamlit run app.py
 ![Urdu Commands](https://github.com/MUSTAFAOP29/SQL-BUDDY/blob/main/Screenshot%20(2371).png)
 
 
-
-
-## 🚀 Live Demo
-👉 [Try SQL Buddy here](https://sql-buddy-08.streamlit.app/)
-
 #### Note: This model is specifically designed for the provided MNC database. Please ensure that you query only valid questions based on the schema shared above.
 
 
