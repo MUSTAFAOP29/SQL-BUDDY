@@ -15,8 +15,16 @@ if not api_key:
 else:
     genai.configure(api_key=api_key)
 
+# function to list available models
+def get_available_models():
+    try:
+        models = genai.list_models()
+        return [m.name.split('/')[-1] for m in models if 'generateContent' in m.supported_generation_methods]
+    except Exception as e:
+        return {"gemini-pro", "gemini-1.5-pro"}  # Fallback defaults
+
 # function to load gemini
-def load_gemini(question, prompt, preferred_model="gemini-1.5-flash"):
+def load_gemini(question, prompt, preferred_model="gemini-2.5-flash"):
     try:
         model = genai.GenerativeModel(preferred_model)
         response = model.generate_content([prompt[0], question])
@@ -136,14 +144,4 @@ if submit:
                 _render_markdown_table(data, columns)
         else:
             st.info("No results found for this query.")
-
-# model_list.py
-from google.ai import generativelanguage_v1beta as genai_client
-import os
-
-# make sure GOOGLE_API_KEY is exported in env before running
-client = genai_client.services.generative_service.client.GenerativeServiceClient()
-models = client.list_models()
-for m in models:
-    print(m.name)
 
