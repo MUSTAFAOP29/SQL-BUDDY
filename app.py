@@ -16,7 +16,7 @@ else:
     genai.configure(api_key=api_key)
 
 # function to load gemini
-def load_gemini(question, prompt, preferred_model="gemini-2.5-flash"):
+def load_gemini(question, prompt, preferred_model="gemini-1.5-flash"):
     try:
         model = genai.GenerativeModel(preferred_model)
         response = model.generate_content([prompt[0], question])
@@ -146,3 +146,4 @@ client = genai_client.services.generative_service.client.GenerativeServiceClient
 models = client.list_models()
 for m in models:
     print(m.name)
+
